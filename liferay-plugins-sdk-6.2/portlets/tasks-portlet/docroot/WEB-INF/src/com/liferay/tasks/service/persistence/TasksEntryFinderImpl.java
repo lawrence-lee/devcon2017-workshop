@@ -91,6 +91,8 @@ public class TasksEntryFinderImpl
 
 			sql = StringUtil.replaceLast(sql, "AND", StringPool.BLANK);
 
+			sql = sql.substring(0, sql.indexOf("ORDER BY"));
+
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
