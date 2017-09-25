@@ -1,6 +1,9 @@
+.sass-cache
 liferay-plugins-sdk-6.2/**/classes
 liferay-plugins-sdk-6.2/dist
 liferay-portal-6.2-ce-ga6/logs
+liferay-portal-6.2-ce-ga6/tomcat-7.0.62/backup
 liferay-portal-6.2-ce-ga6/tomcat-7.0.62/logs
 liferay-portal-6.2-ce-ga6/tomcat-7.0.62/temp
+liferay-portal-6.2-ce-ga6/tomcat-7.0.62/webapps/tasks-portlet
 liferay-portal-6.2-ce-ga6/tomcat-7.0.62/work
