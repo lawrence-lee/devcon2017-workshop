@@ -355,19 +355,19 @@ public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(TasksEntry tasksEntry);
+	public int compareTo(com.liferay.tasks.model.TasksEntry tasksEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<TasksEntry> toCacheModel();
+	public CacheModel<com.liferay.tasks.model.TasksEntry> toCacheModel();
 
 	@Override
-	public TasksEntry toEscapedModel();
+	public com.liferay.tasks.model.TasksEntry toEscapedModel();
 
 	@Override
-	public TasksEntry toUnescapedModel();
+	public com.liferay.tasks.model.TasksEntry toUnescapedModel();
 
 	@Override
 	public String toString();

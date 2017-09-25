@@ -24,40 +24,40 @@ import java.util.Arrays;
  */
 public class TasksEntryServiceClpInvoker {
 	public TasksEntryServiceClpInvoker() {
-		_methodName26 = "getBeanIdentifier";
+		_methodName20 = "getBeanIdentifier";
 
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes20 = new String[] {  };
 
-		_methodName27 = "setBeanIdentifier";
+		_methodName21 = "setBeanIdentifier";
 
-		_methodParameterTypes27 = new String[] { "java.lang.String" };
+		_methodParameterTypes21 = new String[] { "java.lang.String" };
 
-		_methodName32 = "addTasksEntry";
+		_methodName26 = "addTasksEntry";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes26 = new String[] {
 				"java.lang.String", "int", "long", "int", "int", "int", "int",
 				"int", "boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName33 = "deleteTasksEntry";
+		_methodName27 = "deleteTasksEntry";
 
-		_methodParameterTypes33 = new String[] { "long" };
+		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName34 = "getTasksEntry";
+		_methodName28 = "getTasksEntry";
 
-		_methodParameterTypes34 = new String[] { "long" };
+		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName35 = "updateTasksEntry";
+		_methodName29 = "updateTasksEntry";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"long", "java.lang.String", "int", "long", "long", "int", "int",
 				"int", "int", "int", "boolean", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName36 = "updateTasksEntryStatus";
+		_methodName30 = "updateTasksEntryStatus";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -65,20 +65,20 @@ public class TasksEntryServiceClpInvoker {
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName26.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
+		if (_methodName20.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes20, parameterTypes)) {
 			return TasksEntryServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName27.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
+		if (_methodName21.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes21, parameterTypes)) {
 			TasksEntryServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName32.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
+		if (_methodName26.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
 			return TasksEntryServiceUtil.addTasksEntry((java.lang.String)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Long)arguments[2]).longValue(),
@@ -91,18 +91,18 @@ public class TasksEntryServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
-		if (_methodName33.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
+		if (_methodName27.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
 			return TasksEntryServiceUtil.deleteTasksEntry(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName34.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+		if (_methodName28.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes28, parameterTypes)) {
 			return TasksEntryServiceUtil.getTasksEntry(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName35.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
+		if (_methodName29.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes29, parameterTypes)) {
 			return TasksEntryServiceUtil.updateTasksEntry(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
@@ -118,8 +118,8 @@ public class TasksEntryServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[12]);
 		}
 
-		if (_methodName36.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
+		if (_methodName30.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
 			return TasksEntryServiceUtil.updateTasksEntryStatus(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
@@ -129,18 +129,18 @@ public class TasksEntryServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
-	private String _methodName32;
-	private String[] _methodParameterTypes32;
-	private String _methodName33;
-	private String[] _methodParameterTypes33;
-	private String _methodName34;
-	private String[] _methodParameterTypes34;
-	private String _methodName35;
-	private String[] _methodParameterTypes35;
-	private String _methodName36;
-	private String[] _methodParameterTypes36;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
 }

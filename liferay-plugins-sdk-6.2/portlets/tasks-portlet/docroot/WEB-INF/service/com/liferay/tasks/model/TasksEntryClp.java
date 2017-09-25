@@ -555,9 +555,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public java.lang.String getPriorityLabel() {
+	public java.lang.String getStatusLabel() {
 		try {
-			String methodName = "getPriorityLabel";
+			String methodName = "getStatusLabel";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -574,9 +574,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public java.lang.String getStatusLabel() {
+	public java.lang.String getPriorityLabel() {
 		try {
-			String methodName = "getStatusLabel";
+			String methodName = "getPriorityLabel";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -753,6 +753,10 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -883,4 +887,5 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	private Date _finishDate;
 	private int _status;
 	private BaseModel<?> _tasksEntryRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.tasks.service.ClpSerializer.class;
 }

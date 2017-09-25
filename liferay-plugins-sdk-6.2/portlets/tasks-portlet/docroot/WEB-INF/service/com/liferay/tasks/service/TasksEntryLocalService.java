@@ -16,6 +16,7 @@ package com.liferay.tasks.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	* @return the tasks entry that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(
 		com.liferay.tasks.model.TasksEntry tasksEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a tasks entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
 		long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,6 +89,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
 		com.liferay.tasks.model.TasksEntry tasksEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -226,6 +230,7 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	* @return the tasks entry that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
 		com.liferay.tasks.model.TasksEntry tasksEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
