@@ -15,7 +15,10 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.tasks.service.persistence;
+package com.liferay.tasks.service.persistence.impl;
+
+import com.liferay.tasks.service.persistence.TasksEntryFinder;
+import com.liferay.tasks.service.persistence.TasksEntryUtil;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -26,8 +29,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.model.TasksEntryConstants;
 import com.liferay.tasks.model.impl.TasksEntryImpl;
@@ -40,7 +43,7 @@ import java.util.List;
  * @author Ryan Park
  */
 public class TasksEntryFinderImpl
-	extends BasePersistenceImpl<TasksEntry> implements TasksEntryFinder {
+	extends TasksEntryFinderBaseImpl implements TasksEntryFinder {
 
 	public static final String COUNT_BY_G_P_A_R_S_T_N =
 		TasksEntryFinder.class.getName() + ".countByG_P_A_R_S_T_N";

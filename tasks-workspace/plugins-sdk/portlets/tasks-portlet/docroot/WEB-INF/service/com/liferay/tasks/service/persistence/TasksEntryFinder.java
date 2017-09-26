@@ -14,9 +14,13 @@
 
 package com.liferay.tasks.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Ryan Park
+ * @generated
  */
+@ProviderType
 public interface TasksEntryFinder {
 	public int countByG_P_A_R_S_T_N(long groupId, int priority,
 		long assigneeUserId, long reporterUserId, int status,

@@ -14,16 +14,16 @@
 
 package com.liferay.tasks.service;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BaseModel;
 
 import com.liferay.tasks.model.TasksEntryClp;
 
@@ -38,6 +38,7 @@ import java.util.List;
 /**
  * @author Ryan Park
  */
+@ProviderType
 public class ClpSerializer {
 	public static String getServletContextName() {
 		if (Validator.isNotNull(_servletContextName)) {
@@ -214,14 +215,16 @@ public class ClpSerializer {
 
 	public static Throwable translateThrowable(Throwable throwable) {
 		if (_useReflectionToTranslateThrowable) {
+			ObjectInputStream objectInputStream = null;
+			ObjectOutputStream objectOutputStream = null;
+
 			try {
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
+				objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
 
 				objectOutputStream.writeObject(throwable);
 
 				objectOutputStream.flush();
-				objectOutputStream.close();
 
 				UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
 						0, unsyncByteArrayOutputStream.size());
@@ -230,14 +233,19 @@ public class ClpSerializer {
 
 				ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-				ObjectInputStream objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
+				objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
 						contextClassLoader);
 
 				throwable = (Throwable)objectInputStream.readObject();
 
-				objectInputStream.close();
-
 				return throwable;
+			}
+			catch (ClassNotFoundException cnfe) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Do not use reflection to translate throwable");
+				}
+
+				_useReflectionToTranslateThrowable = false;
 			}
 			catch (SecurityException se) {
 				if (_log.isInfoEnabled()) {
@@ -251,30 +259,51 @@ public class ClpSerializer {
 
 				return throwable2;
 			}
+			finally {
+				if (objectOutputStream != null) {
+					try {
+						objectOutputStream.close();
+					}
+					catch (Throwable throwable2) {
+						_log.error(throwable2, throwable2);
+
+						return throwable2;
+					}
+				}
+
+				if (objectInputStream != null) {
+					try {
+						objectInputStream.close();
+					}
+					catch (Throwable throwable2) {
+						_log.error(throwable2, throwable2);
+
+						return throwable2;
+					}
+				}
+			}
 		}
 
 		Class<?> clazz = throwable.getClass();
 
 		String className = clazz.getName();
 
-		if (className.equals(PortalException.class.getName())) {
-			return new PortalException();
+		if (className.equals(
+					"com.liferay.tasks.exception.TasksEntryDueDateException")) {
+			return new com.liferay.tasks.exception.TasksEntryDueDateException(throwable.getMessage(),
+				throwable.getCause());
 		}
 
-		if (className.equals(SystemException.class.getName())) {
-			return new SystemException();
+		if (className.equals(
+					"com.liferay.tasks.exception.TasksEntryTitleException")) {
+			return new com.liferay.tasks.exception.TasksEntryTitleException(throwable.getMessage(),
+				throwable.getCause());
 		}
 
-		if (className.equals("com.liferay.tasks.TasksEntryDueDateException")) {
-			return new com.liferay.tasks.TasksEntryDueDateException();
-		}
-
-		if (className.equals("com.liferay.tasks.TasksEntryTitleException")) {
-			return new com.liferay.tasks.TasksEntryTitleException();
-		}
-
-		if (className.equals("com.liferay.tasks.NoSuchTasksEntryException")) {
-			return new com.liferay.tasks.NoSuchTasksEntryException();
+		if (className.equals(
+					"com.liferay.tasks.exception.NoSuchTasksEntryException")) {
+			return new com.liferay.tasks.exception.NoSuchTasksEntryException(throwable.getMessage(),
+				throwable.getCause());
 		}
 
 		return throwable;

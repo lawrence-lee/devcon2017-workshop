@@ -17,12 +17,14 @@
 
 package com.liferay.tasks.social;
 
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
-import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
+import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.permission.TasksEntryPermission;
@@ -36,6 +38,15 @@ public class TasksActivityInterpreter extends BaseSocialActivityInterpreter {
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
 	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	private final ResourceBundleLoader _resourceBundleLoader =
+			new ClassResourceBundleLoader(
+				"content.Language", TasksActivityInterpreter.class);
 
 	@Override
 	protected String getBody(

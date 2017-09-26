@@ -26,20 +26,20 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.TasksEntryServiceUtil;
 import com.liferay.tasks.util.PortletKeys;
-import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
 
@@ -126,21 +126,13 @@ public class TasksPortlet extends MVCPortlet {
 			MBMessage.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.DELETE)) {
-			MBMessageServiceUtil.deleteDiscussionMessage(
-				groupId, className, classPK, className, classPK,
-				themeDisplay.getUserId(), messageId);
+			MBMessageServiceUtil.deleteDiscussionMessage(messageId);
 		}
 		else if (messageId <= 0) {
-			MBMessageServiceUtil.addDiscussionMessage(
-				groupId, className, classPK, className, classPK,
-				themeDisplay.getUserId(), threadId, parentMessageId, subject,
-				body, serviceContext);
+			MBMessageServiceUtil.addDiscussionMessage(groupId, className, classPK, threadId, parentMessageId, subject, body, serviceContext);
 		}
 		else {
-			MBMessageServiceUtil.updateDiscussionMessage(
-				className, classPK, className, classPK,
-				themeDisplay.getUserId(), messageId, subject, body,
-				serviceContext);
+			MBMessageServiceUtil.updateDiscussionMessage(className, classPK, messageId, subject, body, serviceContext);
 		}
 	}
 
