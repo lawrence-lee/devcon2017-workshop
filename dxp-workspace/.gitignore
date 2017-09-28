@@ -16,7 +16,6 @@
 /bundles
 /gradle-*.properties
 /plugins-sdk/**/classes
-/plugins-sdk/**/ivy.xml.MD5
 /plugins-sdk/**/liferay-hook.xml.processed
 /plugins-sdk/build.*.properties
 /plugins-sdk/dist
