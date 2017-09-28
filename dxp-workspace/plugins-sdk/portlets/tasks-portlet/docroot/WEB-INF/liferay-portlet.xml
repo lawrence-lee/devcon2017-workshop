@@ -5,8 +5,6 @@
   <portlet>
     <portlet-name>1</portlet-name>
     <icon>/tasks/icon.png</icon>
-    <social-activity-interpreter-class>com.liferay.tasks.social.TasksActivityInterpreter</social-activity-interpreter-class>
-    <user-notification-definitions>com/liferay/tasks/portlet/tasks-user-notification-definitions.xml</user-notification-definitions>
     <asset-renderer-factory>com.liferay.tasks.asset.TasksEntryAssetRendererFactory</asset-renderer-factory>
     <header-portlet-css>/tasks/css/main.css</header-portlet-css>
     <header-portlet-javascript>/tasks/js/main.js</header-portlet-javascript>
