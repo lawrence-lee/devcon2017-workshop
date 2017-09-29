@@ -16,13 +16,15 @@ package com.liferay.tasks.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 import com.liferay.tasks.model.TasksEntry;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -247,70 +249,6 @@ public class TasksEntryUtil {
 	}
 
 	/**
-	* Returns all the tasks entries that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	* Returns a range of all the tasks entries that the user has permission to view where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @return the range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByGroupId(long groupId, int start,
-		int end) {
-		return getPersistence().filterFindByGroupId(groupId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the tasks entries that the user has permissions to view where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator<TasksEntry> orderByComparator) {
-		return getPersistence()
-				   .filterFindByGroupId(groupId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the tasks entries before and after the current tasks entry in the ordered set of tasks entries that the user has permission to view where groupId = &#63;.
-	*
-	* @param tasksEntryId the primary key of the current tasks entry
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tasks entry
-	* @throws NoSuchTasksEntryException if a tasks entry with the primary key could not be found
-	*/
-	public static TasksEntry[] filterFindByGroupId_PrevAndNext(
-		long tasksEntryId, long groupId,
-		OrderByComparator<TasksEntry> orderByComparator)
-		throws com.liferay.tasks.exception.NoSuchTasksEntryException {
-		return getPersistence()
-				   .filterFindByGroupId_PrevAndNext(tasksEntryId, groupId,
-			orderByComparator);
-	}
-
-	/**
 	* Removes all the tasks entries where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -327,16 +265,6 @@ public class TasksEntryUtil {
 	*/
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of tasks entries that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching tasks entries that the user has permission to view
-	*/
-	public static int filterCountByGroupId(long groupId) {
-		return getPersistence().filterCountByGroupId(groupId);
 	}
 
 	/**
@@ -972,75 +900,6 @@ public class TasksEntryUtil {
 	}
 
 	/**
-	* Returns all the tasks entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @return the matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_U(long groupId, long userId) {
-		return getPersistence().filterFindByG_U(groupId, userId);
-	}
-
-	/**
-	* Returns a range of all the tasks entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @return the range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_U(long groupId, long userId,
-		int start, int end) {
-		return getPersistence().filterFindByG_U(groupId, userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the tasks entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_U(long groupId, long userId,
-		int start, int end, OrderByComparator<TasksEntry> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_U(groupId, userId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the tasks entries before and after the current tasks entry in the ordered set of tasks entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	*
-	* @param tasksEntryId the primary key of the current tasks entry
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tasks entry
-	* @throws NoSuchTasksEntryException if a tasks entry with the primary key could not be found
-	*/
-	public static TasksEntry[] filterFindByG_U_PrevAndNext(long tasksEntryId,
-		long groupId, long userId,
-		OrderByComparator<TasksEntry> orderByComparator)
-		throws com.liferay.tasks.exception.NoSuchTasksEntryException {
-		return getPersistence()
-				   .filterFindByG_U_PrevAndNext(tasksEntryId, groupId, userId,
-			orderByComparator);
-	}
-
-	/**
 	* Removes all the tasks entries where groupId = &#63; and userId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1059,17 +918,6 @@ public class TasksEntryUtil {
 	*/
 	public static int countByG_U(long groupId, long userId) {
 		return getPersistence().countByG_U(groupId, userId);
-	}
-
-	/**
-	* Returns the number of tasks entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param userId the user ID
-	* @return the number of matching tasks entries that the user has permission to view
-	*/
-	public static int filterCountByG_U(long groupId, long userId) {
-		return getPersistence().filterCountByG_U(groupId, userId);
 	}
 
 	/**
@@ -1225,78 +1073,6 @@ public class TasksEntryUtil {
 	}
 
 	/**
-	* Returns all the tasks entries that the user has permission to view where groupId = &#63; and assigneeUserId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param assigneeUserId the assignee user ID
-	* @return the matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_A(long groupId,
-		long assigneeUserId) {
-		return getPersistence().filterFindByG_A(groupId, assigneeUserId);
-	}
-
-	/**
-	* Returns a range of all the tasks entries that the user has permission to view where groupId = &#63; and assigneeUserId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param assigneeUserId the assignee user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @return the range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_A(long groupId,
-		long assigneeUserId, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_A(groupId, assigneeUserId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the tasks entries that the user has permissions to view where groupId = &#63; and assigneeUserId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param assigneeUserId the assignee user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_A(long groupId,
-		long assigneeUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_A(groupId, assigneeUserId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the tasks entries before and after the current tasks entry in the ordered set of tasks entries that the user has permission to view where groupId = &#63; and assigneeUserId = &#63;.
-	*
-	* @param tasksEntryId the primary key of the current tasks entry
-	* @param groupId the group ID
-	* @param assigneeUserId the assignee user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tasks entry
-	* @throws NoSuchTasksEntryException if a tasks entry with the primary key could not be found
-	*/
-	public static TasksEntry[] filterFindByG_A_PrevAndNext(long tasksEntryId,
-		long groupId, long assigneeUserId,
-		OrderByComparator<TasksEntry> orderByComparator)
-		throws com.liferay.tasks.exception.NoSuchTasksEntryException {
-		return getPersistence()
-				   .filterFindByG_A_PrevAndNext(tasksEntryId, groupId,
-			assigneeUserId, orderByComparator);
-	}
-
-	/**
 	* Removes all the tasks entries where groupId = &#63; and assigneeUserId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1315,17 +1091,6 @@ public class TasksEntryUtil {
 	*/
 	public static int countByG_A(long groupId, long assigneeUserId) {
 		return getPersistence().countByG_A(groupId, assigneeUserId);
-	}
-
-	/**
-	* Returns the number of tasks entries that the user has permission to view where groupId = &#63; and assigneeUserId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param assigneeUserId the assignee user ID
-	* @return the number of matching tasks entries that the user has permission to view
-	*/
-	public static int filterCountByG_A(long groupId, long assigneeUserId) {
-		return getPersistence().filterCountByG_A(groupId, assigneeUserId);
 	}
 
 	/**
@@ -1481,78 +1246,6 @@ public class TasksEntryUtil {
 	}
 
 	/**
-	* Returns all the tasks entries that the user has permission to view where groupId = &#63; and resolverUserId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param resolverUserId the resolver user ID
-	* @return the matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_R(long groupId,
-		long resolverUserId) {
-		return getPersistence().filterFindByG_R(groupId, resolverUserId);
-	}
-
-	/**
-	* Returns a range of all the tasks entries that the user has permission to view where groupId = &#63; and resolverUserId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param resolverUserId the resolver user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @return the range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_R(long groupId,
-		long resolverUserId, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_R(groupId, resolverUserId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the tasks entries that the user has permissions to view where groupId = &#63; and resolverUserId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TasksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param resolverUserId the resolver user ID
-	* @param start the lower bound of the range of tasks entries
-	* @param end the upper bound of the range of tasks entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tasks entries that the user has permission to view
-	*/
-	public static List<TasksEntry> filterFindByG_R(long groupId,
-		long resolverUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_R(groupId, resolverUserId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the tasks entries before and after the current tasks entry in the ordered set of tasks entries that the user has permission to view where groupId = &#63; and resolverUserId = &#63;.
-	*
-	* @param tasksEntryId the primary key of the current tasks entry
-	* @param groupId the group ID
-	* @param resolverUserId the resolver user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tasks entry
-	* @throws NoSuchTasksEntryException if a tasks entry with the primary key could not be found
-	*/
-	public static TasksEntry[] filterFindByG_R_PrevAndNext(long tasksEntryId,
-		long groupId, long resolverUserId,
-		OrderByComparator<TasksEntry> orderByComparator)
-		throws com.liferay.tasks.exception.NoSuchTasksEntryException {
-		return getPersistence()
-				   .filterFindByG_R_PrevAndNext(tasksEntryId, groupId,
-			resolverUserId, orderByComparator);
-	}
-
-	/**
 	* Removes all the tasks entries where groupId = &#63; and resolverUserId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1571,17 +1264,6 @@ public class TasksEntryUtil {
 	*/
 	public static int countByG_R(long groupId, long resolverUserId) {
 		return getPersistence().countByG_R(groupId, resolverUserId);
-	}
-
-	/**
-	* Returns the number of tasks entries that the user has permission to view where groupId = &#63; and resolverUserId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param resolverUserId the resolver user ID
-	* @return the number of matching tasks entries that the user has permission to view
-	*/
-	public static int filterCountByG_R(long groupId, long resolverUserId) {
-		return getPersistence().filterCountByG_R(groupId, resolverUserId);
 	}
 
 	/**
@@ -1733,16 +1415,9 @@ public class TasksEntryUtil {
 	}
 
 	public static TasksEntryPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (TasksEntryPersistence)PortletBeanLocatorUtil.locate(com.liferay.tasks.service.ClpSerializer.getServletContextName(),
-					TasksEntryPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(TasksEntryUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	private static TasksEntryPersistence _persistence;
+	private static ServiceTracker<TasksEntryPersistence, TasksEntryPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(TasksEntryPersistence.class);
 }

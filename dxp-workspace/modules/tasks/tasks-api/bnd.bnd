@@ -2,8 +2,5 @@ Bundle-Name: tasks-api
 Bundle-SymbolicName: com.liferay.tasks.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.tasks.exception,\
-	com.liferay.tasks.model,\
-	com.liferay.tasks.service,\
-	com.liferay.tasks.service.persistence
+	com.liferay.tasks.*
 -includeresource: META-INF/service.xml=../tasks-service/service.xml

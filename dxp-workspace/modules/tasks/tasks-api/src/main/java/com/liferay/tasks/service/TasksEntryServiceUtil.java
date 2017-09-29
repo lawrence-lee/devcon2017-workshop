@@ -16,9 +16,9 @@ package com.liferay.tasks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for TasksEntry. This utility wraps
@@ -93,12 +93,6 @@ public class TasksEntryServiceUtil {
 			status, serviceContext);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -108,28 +102,10 @@ public class TasksEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static TasksEntryService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					TasksEntryService.class.getName());
-
-			if (invokableService instanceof TasksEntryService) {
-				_service = (TasksEntryService)invokableService;
-			}
-			else {
-				_service = new TasksEntryServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(TasksEntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static TasksEntryService _service;
+	private static ServiceTracker<TasksEntryService, TasksEntryService> _serviceTracker =
+		ServiceTrackerFactory.open(TasksEntryService.class);
 }

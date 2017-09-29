@@ -25,6 +25,10 @@ import com.liferay.tasks.service.persistence.TasksEntryPersistence;
  * @generated
  */
 public class TasksEntryFinderBaseImpl extends BasePersistenceImpl<TasksEntry> {
+	public TasksEntryFinderBaseImpl() {
+		setModelClass(TasksEntry.class);
+	}
+
 	/**
 	 * Returns the tasks entry persistence.
 	 *

@@ -16,9 +16,9 @@ package com.liferay.tasks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for TasksEntry. This utility wraps
@@ -242,12 +242,6 @@ public class TasksEntryLocalServiceUtil {
 		return getService().getUserTasksEntriesCount(userId);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -409,28 +403,10 @@ public class TasksEntryLocalServiceUtil {
 			.updateAsset(userId, tasksEntry, assetCategoryIds, assetTagNames);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static TasksEntryLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					TasksEntryLocalService.class.getName());
-
-			if (invokableLocalService instanceof TasksEntryLocalService) {
-				_service = (TasksEntryLocalService)invokableLocalService;
-			}
-			else {
-				_service = new TasksEntryLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(TasksEntryLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static TasksEntryLocalService _service;
+	private static ServiceTracker<TasksEntryLocalService, TasksEntryLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(TasksEntryLocalService.class);
 }
