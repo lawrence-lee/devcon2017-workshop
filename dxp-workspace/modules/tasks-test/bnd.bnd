@@ -1,0 +1,6 @@
+Bundle-Version: 1.0.0
+Private-Package: \
+aQute.remote.util.*,\
+org.jboss.osgi.metadata.*,\
+org.jboss.shrinkwrap.descriptor.spi.node
+-sources: true
